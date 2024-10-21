@@ -430,6 +430,9 @@ func (i *Instance) initialize(ctx context.Context, reg prometheus.Registerer, cf
 		}
 		rw.Headers[agentseed.HeaderName] = uid
 	}
+	for _, rw := range cfg.RemoteWrite {
+		rw.SendNativeHistograms = true
+	}
 	err = i.remoteStore.ApplyConfig(&config.Config{
 		GlobalConfig:       cfg.global.Prometheus,
 		RemoteWriteConfigs: cfg.RemoteWrite,
@@ -529,6 +532,10 @@ func (i *Instance) Update(c Config) (err error) {
 		// N.B.: only call PatchSD if HostFilter is enabled since it
 		// mutates what targets will be discovered.
 		i.hostFilter.PatchSD(c.ScrapeConfigs)
+	}
+
+	for _, rw := range c.RemoteWrite {
+		rw.SendNativeHistograms = true
 	}
 
 	err = i.remoteStore.ApplyConfig(&config.Config{
