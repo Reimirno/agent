@@ -29,7 +29,7 @@ require (
 	github.com/cilium/ebpf v0.12.3 // indirect
 	github.com/coreos/go-systemd v0.0.0-20191104093116-d3cd4ed1dbcf
 	github.com/coreos/go-systemd/v22 v22.5.0
-	github.com/docker/docker v25.0.6+incompatible
+	github.com/docker/docker v27.3.1+incompatible
 	github.com/docker/go-connections v0.5.0
 	github.com/drone/envsubst/v2 v2.0.0-20210730161058-179042472c46
 	github.com/fatih/color v1.16.0
@@ -722,14 +722,8 @@ replace (
 	k8s.io/klog/v2 => github.com/simonpasquier/klog-gokit/v3 v3.4.0
 )
 
-// TODO(marctc): remove replace directive once:
-//
-// * There is a release of Prometheus which contains
-// prometheus/prometheus#13002
-// and prometheus/prometheus#13497
-// We use the last v1-related tag as the replace statement does not work for v2
-// tags without the v2 suffix to the module root.
-replace github.com/prometheus/prometheus => github.com/grafana/prometheus v1.8.2-0.20240130142130-51b39f24d406 // cmp_header_order branch
+// Replace with cherry-picked commit that enables job level protobuf scraping (https://databricks.atlassian.net/browse/ENGMP-211)
+replace github.com/prometheus/prometheus => github.com/databricks-eng/grafana-agent v0.0.1-proto-scrape // prometheus_proto_scrape branch
 
 replace gopkg.in/yaml.v2 => github.com/rfratto/go-yaml v0.0.0-20211119180816-77389c3526dc
 
@@ -795,3 +789,7 @@ replace github.com/github/smimesign => github.com/grafana/smimesign v0.2.1-0.202
 // Replacing for an internal for with a bugfix for delta histograms, https://github.com/grafana/stackdriver_exporter/pull/1
 // Moving back to upstream is being tracked in an internal issue
 replace github.com/prometheus-community/stackdriver_exporter => github.com/grafana/stackdriver_exporter v0.0.0-20240228143257-3a2c9acef5a2
+
+// Use docker version that's compatible with prometheus v0.0.1-proto-scrape
+// Otherwise, 'go mod tidy' will automatically update go.mod to use v27.3.1 due to the updated replace directive in L726
+replace github.com/docker/docker => github.com/docker/docker v25.0.6+incompatible
