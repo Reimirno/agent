@@ -441,7 +441,6 @@ func (i *Instance) initialize(ctx context.Context, reg prometheus.Registerer, cf
 	opts := &scrape.Options{
 		ExtraMetrics:              cfg.global.ExtraMetrics,
 		HTTPClientOptions:         []config_util.HTTPClientOption{},
-		EnableProtobufNegotiation: cfg.global.EnableProtobufNegotiation,
 	}
 
 	if cfg.global.DisableKeepAlives {

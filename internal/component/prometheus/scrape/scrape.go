@@ -163,7 +163,6 @@ func New(o component.Options, args Arguments) (*Component, error) {
 		HTTPClientOptions: []config_util.HTTPClientOption{
 			config_util.WithDialContextFunc(httpData.DialFunc),
 		},
-		EnableProtobufNegotiation: args.EnableProtobufNegotiation,
 	}
 	scraper := scrape.NewManager(scrapeOptions, o.Logger, flowAppendable)
 
