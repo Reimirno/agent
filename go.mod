@@ -722,8 +722,7 @@ replace (
 	k8s.io/klog/v2 => github.com/simonpasquier/klog-gokit/v3 v3.4.0
 )
 
-// Replace with cherry-picked commit that enables job level protobuf scraping (https://databricks.atlassian.net/browse/ENGMP-211)
-replace github.com/prometheus/prometheus => github.com/databricks-eng/grafana-agent v0.0.1-proto-scrape // prometheus_proto_scrape branch
+replace github.com/prometheus/prometheus => github.com/databricks-eng/grafana-agent v1.8.2-0.20250703170230-f0323457916b // max_retry branch
 
 replace gopkg.in/yaml.v2 => github.com/rfratto/go-yaml v0.0.0-20211119180816-77389c3526dc
 
